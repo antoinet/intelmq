@@ -1,0 +1,58 @@
+SieveModel: rules*=Rule ;
+
+Rule:
+  'if' condition=Condition '{'
+    actions*=Action[';']
+  '}'
+;
+
+Condition: SingleCondition | ConditionList ;
+
+ConditionList:
+  combination=Combination '('
+    conditions+=SingleCondition[',']
+  ')'
+;
+
+Combination:
+  'allof'         // true if every single test in parenthesis are true (logical and)
+  | 'anyof'       // true if at least one of the single tests in parenthesis is true (logical or)
+;
+
+SingleCondition: key=STRING match=MatchRule ;
+
+MatchRule: StringMatchRule | NumericMatchRule ;
+
+StringMatchRule: match_type=StringMatchType value=Value;
+
+NumericMatchRule: match_type=NumericMatchType value=NUMBER;
+
+Value: SingleValue | ValueList ;
+
+SingleValue: value=STRING ;
+
+ValueList: '[' values+=SingleValue[','] ']' ;
+
+StringMatchType:
+  ':is'           // compares two whole strings with each other
+  | ':contains'   // sub-string match
+  | ':matches'    // match strings with '?' for one unknown character
+                  // and '*' for zero or more unknown characters
+;
+
+NumericMatchType:
+  ':lt'           // less than
+  | ':lte'        // less than or equal
+  | ':gt'         // greater than
+  | ':gte'        // greater than or equal
+  | ':eq'         // equal
+  | ':neq'        // not equal
+;
+
+Action:
+  'discard' | 'reject' | 'redirect' | 'fileinto' | 'stop' | 'keep'
+;
+
+Comment:
+  /#.*$/
+;
