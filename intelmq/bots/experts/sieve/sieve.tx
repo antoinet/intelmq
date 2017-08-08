@@ -1,73 +1,59 @@
 SieveModel: rules*=Rule ;
 
 Rule:
-  'if' condition=Condition '{'
+  'if' condition=Expression '{'
     actions*=Action[';']
   '}'
 ;
 
-// Condition: SingleCondition | ConditionList ;
-
-ConditionList:
-  combination=Combination '('
-    conditions+=SingleCondition[',']
-  ')'
+Expression: Conjunction ('||' Conjunction)*;
+Conjunction: Condition ('&&' Condition)*;
+Condition:
+    StringMatch
+    | NumericMatch
+    | ExistMatch
 ;
 
-Combination:
-  'allof'         // true if every single test in parenthesis are true (logical and)
-  | 'anyof'       // true if at least one of the single tests in parenthesis is true (logical or)
-;
+ExistMatch: op=ExistOperator key=STRING;
+ExistOperator: ':exists' | ':notexists';
 
-SingleCondition: key=STRING match=MatchRule ;
-
-MatchRule: StringMatchRule | NumericMatchRule ;
-
-StringMatchRule: match_type=StringMatchType value=Value;
-
-NumericMatchRule: match_type=NumericMatchType value=NUMBER;
-
-Value: SingleValue | ValueList ;
-
-SingleValue: value=STRING ;
-
-ValueList: '[' values+=SingleValue[','] ']' ;
-
-ExistMatchType:
-  ':exists',
-  | ':notexists'
-
-StringMatchType:
+StringMatch: key=STRING op=StringOperator value=Value;
+StringOperator:
   '=='           // compares two whole strings with each other
   | '!='         // test for string inequality
-  | ':contains'        // sub-string match
+  | ':contains'  // sub-string match
   | '=~'         // match strings according to regular expression
   | '!~'         // inverse match with regular expression
 ;
 
-NumericMatchType:
+NumericMatch: key=STRING op=NumericOperator value=NUMBER;
+NumericOperator:
   '=='          // equal
   | '!='        // not equal
   | '<'         // less than
   | '<='        // less than or equal
   | '>'         // greater than
   | '>='        // greater than or equal
-
 ;
+
+Value: SingleValue | ValueList ;
+SingleValue: value=STRING ;
+ValueList: '[' values+=SingleValue[','] ']' ;
+
+
+Action: FilteringAction | ModificationAction;
 
 FilteringAction:
   'drop' | 'keep'
 ;
 
 ModificationAction:
-    'add' key '=' value|
+    'add' key=STRING '=' value=STRING
+    | 'add!' key=STRING '=' value=STRING
+    | 'modify' key=STRING '=' value=STRING
+    | 'remove' key=STRING
 ;
 
 Comment:
   /(\/\/.*$)|(\/\*.*\*\/)/  // TODO: // line comments and /* block comments */, figure out the right regex
-
-  /* bla
-   bla bla
-   bla
-   */
 ;
