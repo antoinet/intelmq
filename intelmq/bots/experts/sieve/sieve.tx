@@ -1,18 +1,20 @@
 SieveModel: rules*=Rule ;
 
 Rule:
-  'if' condition=Expression '{'
+  'if' expression=Expression '{'
     actions*=Action[';']
   '}'
 ;
 
-Expression: Conjunction ('||' Conjunction)*;
-Conjunction: Condition ('&&' Condition)*;
+Expression: conjunctions+=Conjunction['||'];
+Conjunction: conditions+=Condition['&&'];
 Condition:
-    StringMatch
+    '(' Expression ')'
+    | StringMatch
     | NumericMatch
     | ExistMatch
 ;
+
 
 ExistMatch: op=ExistOperator key=STRING;
 ExistOperator: ':exists' | ':notexists';
@@ -41,18 +43,17 @@ SingleValue: value=STRING ;
 ValueList: '[' values+=SingleValue[','] ']' ;
 
 
-Action: FilteringAction | ModificationAction;
+Action: FilteringAction | AddAction | AddForceAction | ModifyAction | RemoveAction;
 
 FilteringAction:
   'drop' | 'keep'
 ;
 
-ModificationAction:
-    'add' key=STRING '=' value=STRING
-    | 'add!' key=STRING '=' value=STRING
-    | 'modify' key=STRING '=' value=STRING
-    | 'remove' key=STRING
-;
+
+AddAction: 'add' key=STRING '=' value=STRING;
+AddForceAction: 'add!' key=STRING '=' value=STRING;
+ModifyAction: 'modify' key=STRING '=' value=STRING;
+RemoveAction: 'remove' key=STRING;
 
 Comment:
   /(\/\/.*$)|(\/\*.*\*\/)/  // TODO: // line comments and /* block comments */, figure out the right regex
