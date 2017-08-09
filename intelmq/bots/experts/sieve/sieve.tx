@@ -1,25 +1,22 @@
 SieveModel: rules*=Rule ;
 
 Rule:
-  'if' expression=Expression '{'
+  'if' expr=Expression '{'
     actions*=Action[';']
   '}'
 ;
 
-Expression: conjunctions+=Conjunction['||'];
-Conjunction: conditions+=Condition['&&'];
+Expression: conj=Conjunction ('||' conj=Conjunction)*;
+Conjunction: cond=Condition ('&&' cond=Condition)*;
 Condition:
-    '(' Expression ')'
-    | StringMatch
-    | NumericMatch
-    | ExistMatch
+    match=StringMatch
+    | match=NumericMatch
+    | match=ExistMatch
+    | ( '(' match=Expression ')' )
 ;
 
 
-ExistMatch: op=ExistOperator key=STRING;
-ExistOperator: ':exists' | ':notexists';
-
-StringMatch: key=STRING op=StringOperator value=Value;
+StringMatch: key=Key op=StringOperator value=Value;
 StringOperator:
   '=='           // compares two whole strings with each other
   | '!='         // test for string inequality
@@ -28,7 +25,7 @@ StringOperator:
   | '!~'         // inverse match with regular expression
 ;
 
-NumericMatch: key=STRING op=NumericOperator value=NUMBER;
+NumericMatch: key=Key op=NumericOperator value=NUMBER;
 NumericOperator:
   '=='          // equal
   | '!='        // not equal
@@ -37,6 +34,11 @@ NumericOperator:
   | '>'         // greater than
   | '>='        // greater than or equal
 ;
+
+ExistMatch: op=ExistOperator key=STRING;
+ExistOperator: ':exists' | ':notexists';
+
+Key: /[a-z_.]+/;
 
 Value: SingleValue | ValueList ;
 SingleValue: value=STRING ;
