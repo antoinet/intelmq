@@ -62,5 +62,5 @@ ModifyAction: 'modify' key=Key '=' value=STRING;        // modify key/value, do 
 RemoveAction: 'remove' key=Key;
 
 Comment:
-  /(\/\/.*$)|(\/\*.*\*\/)/  // TODO: // line comments and /* block comments */, figure out the right regex
+  /(\/*([^]|[\r\n]|(\+([^/]|[\r\n])))*+\/)|(\/\/.*)/
 ;
