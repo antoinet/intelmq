@@ -52,10 +52,10 @@ FilteringAction:
 ;
 
 
-AddAction: 'add' key=STRING '=' value=STRING;
-AddForceAction: 'add!' key=STRING '=' value=STRING;
-ModifyAction: 'modify' key=STRING '=' value=STRING;
-RemoveAction: 'remove' key=STRING;
+AddAction: 'add' key=Key '=' value=STRING;
+AddForceAction: 'add!' key=Key '=' value=STRING;
+ModifyAction: 'modify' key=Key '=' value=STRING;
+RemoveAction: 'remove' key=Key;
 
 Comment:
   /(\/\/.*$)|(\/\*.*\*\/)/  // TODO: // line comments and /* block comments */, figure out the right regex
