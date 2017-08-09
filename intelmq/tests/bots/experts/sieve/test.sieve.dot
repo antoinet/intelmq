@@ -1,0 +1,38 @@
+
+    digraph xtext {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+4468631368 -> 4468859400 [label="rules:0" arrowtail=diamond dir=both]
+4468859400 -> 4468860744 [label="expr" arrowtail=diamond dir=both]
+4468860744 -> 4468861920 [label="conj:0" arrowtail=diamond dir=both]
+4468861920 -> 4468859232 [label="cond:0" arrowtail=diamond dir=both]
+4468859232 -> 4468820792 [label="match" arrowtail=diamond dir=both]
+4468820792 -> 4468819112 [label="conj:0" arrowtail=diamond dir=both]
+4468819112 -> 4468820064 [label="cond:0" arrowtail=diamond dir=both]
+4468820064 -> 4468878976 [label="match" arrowtail=diamond dir=both]
+4468878976 -> 4468876680 [label="value" arrowtail=diamond dir=both]
+4468876680[label="{:SingleStringValue|+value:str='127.0.0.1'\l}"]
+4468878976[label="{:StringMatch|+key:str='source.ip'\l+op:str='=='\l}"]
+4468820064[label="{:Condition|}"]
+4468819112[label="{:Conjunction|}"]
+4468820792[label="{:Expression|}"]
+4468859232[label="{:Condition|}"]
+4468861920[label="{:Conjunction|}"]
+4468860744[label="{:Expression|}"]
+4468859400 -> 4468860688 [label="actions:0" arrowtail=diamond dir=both]
+4468860688 -> 4468859344 [label="action" arrowtail=diamond dir=both]
+4468859344[label="{:AddAction|+key:str='source.asn'\l+value:str='AS559'\l}"]
+4468860688[label="{:Action|}"]
+4468859400[label="{:Rule|}"]
+4468631368[label="{:SieveModel|}"]
+
+}

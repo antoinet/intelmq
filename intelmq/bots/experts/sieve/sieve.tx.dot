@@ -11,93 +11,91 @@
     edge[dir=black,arrowtail=empty]
 
 
-140730825263032[ label="{ModifyAction|+key:Key\l+value:STRING\l}"]
+140712151252312 -> 140712151249688[arrowtail=diamond, dir=both, headlabel="values 1..*"]
+140712151252312[ label="{StringValueList|}"]
 
-140730825184120 -> 140730825185048[arrowtail=diamond, dir=both, headlabel="rules 0..*"]
-140730825184120[ label="{SieveModel|}"]
+140712151228504 -> 140712151256728[arrowtail=diamond, dir=both, headlabel="value "]
+140712151228504[ label="{NumericMatch|+key:Key\l+op:NumericOperator\l}"]
 
-140730825266808[ label="{RemoveAction|+key:Key\l}"]
+140712151224504[ label="{StringOperator|==\|!=\|:contains\|=~\|!~}"]
 
-140730825188152 -> 140730825193272[arrowtail=diamond, dir=both, headlabel="conj 0..*"]
-140730825188152[ label="{Expression|}"]
+140712151286936[ label="{RemoveAction|+key:Key\l}"]
 
-140730825208184[ label="{StringOperator|==\|!=\|:contains\|=~\|!~}"]
+140712151272728[ label="{DropAction|drop}"]
 
-140730825212184 -> 140730825240408[arrowtail=diamond, dir=both, headlabel="value "]
-140730825212184[ label="{NumericMatch|+key:Key\l+op:NumericOperator\l}"]
+140712151241400[ label="{ExistOperator|:exists\|:notexists}"]
 
-140730825228120[ label="{Key|[a-z_.]+}"]
+140712151290456[ label="{Comment|(\\/\\/.*$)\|(\\/\\*.*\\*\\/)}"]
 
-140730825198552[ label="{Condition|+match:OBJECT\l}"]
+140712151266648[ label="{Action|+action:OBJECT\l}"]
 
-140730825225080[ label="{ExistOperator|:exists\|:notexists}"]
+140712151237336[ label="{ExistMatch|+op:ExistOperator\l+key:Key\l}"]
 
-140730825221016[ label="{ExistMatch|+op:ExistOperator\l+key:Key\l}"]
+140712151233080[ label="{NumericOperator|==\|!=\|\<\|\<=\|\>\|\>=}"]
 
-140730825246104 -> 140730825242488[arrowtail=diamond, dir=both, headlabel="values 1..*"]
-140730825246104[ label="{NumericValueList|}"]
+140712151256728[ label="{*NumericValue|}"]
+140712151256728 -> 140712151258808 [dir=back]
+140712151256728 -> 140712151262424 [dir=back]
 
-140730825231512[ label="{*StringValue|}"]
-140730825231512 -> 140730825233368 [dir=back]
-140730825231512 -> 140730825235992 [dir=back]
+140712151204472 -> 140712151209592[arrowtail=diamond, dir=both, headlabel="conj 0..*"]
+140712151204472[ label="{Expression|}"]
 
-140730825185048 -> 140730825188152[arrowtail=diamond, dir=both, headlabel="expr "]
-140730825185048 -> 140730825250328[arrowtail=diamond, dir=both, headlabel="actions 0..*"]
-140730825185048[ label="{Rule|}"]
+140712151201528 -> 140712151204472[arrowtail=diamond, dir=both, headlabel="expr "]
+140712151201528 -> 140712151266648[arrowtail=diamond, dir=both, headlabel="actions 0..*"]
+140712151201528[ label="{Rule|}"]
 
-140730825258456[ label="{AddForceAction|+key:Key\l+value:STRING\l}"]
+140712151262424 -> 140712151258808[arrowtail=diamond, dir=both, headlabel="values 1..*"]
+140712151262424[ label="{NumericValueList|}"]
 
-140730825254200[ label="{AddAction|+key:Key\l+value:STRING\l}"]
+140712151258808[ label="{SingleNumericValue|+value:NUMBER\l}"]
 
-140730825242488[ label="{SingleNumericValue|+value:NUMBER\l}"]
+140712151209592 -> 140712151214872[arrowtail=diamond, dir=both, headlabel="cond 0..*"]
+140712151209592[ label="{Conjunction|}"]
 
-140730825240408[ label="{*NumericValue|}"]
-140730825240408 -> 140730825242488 [dir=back]
-140730825240408 -> 140730825246104 [dir=back]
+140712151278808[ label="{AddForceAction|+key:Key\l+value:STRING\l}"]
 
-140730825250328[ label="{*Action|drop\|AddAction\|AddForceAction\|ModifyAction\|RemoveAction}"]
-140730825250328 -> 140730825254200 [dir=back]
-140730825250328 -> 140730825258456 [dir=back]
-140730825250328 -> 140730825263032 [dir=back]
-140730825250328 -> 140730825266808 [dir=back]
+140712151244440[ label="{Key|[a-z_.]+}"]
 
-140730825204440 -> 140730825231512[arrowtail=diamond, dir=both, headlabel="value "]
-140730825204440[ label="{StringMatch|+key:Key\l+op:StringOperator\l}"]
+140712151247832[ label="{*StringValue|}"]
+140712151247832 -> 140712151249688 [dir=back]
+140712151247832 -> 140712151252312 [dir=back]
 
-140730825233368[ label="{SingleStringValue|+value:STRING\l}"]
+140712151200600 -> 140712151201528[arrowtail=diamond, dir=both, headlabel="rules 0..*"]
+140712151200600[ label="{SieveModel|}"]
 
-140730825270328[ label="{Comment|(\\/\\/.*$)\|(\\/\\*.*\\*\\/)}"]
+140712151249688[ label="{SingleStringValue|+value:STRING\l}"]
 
-140730825216760[ label="{NumericOperator|==\|!=\|\<\|\<=\|\>\|\>=}"]
+140712151274776[ label="{AddAction|+key:Key\l+value:STRING\l}"]
 
-140730825235992 -> 140730825233368[arrowtail=diamond, dir=both, headlabel="values 1..*"]
-140730825235992[ label="{StringValueList|}"]
+140712151220760 -> 140712151247832[arrowtail=diamond, dir=both, headlabel="value "]
+140712151220760[ label="{StringMatch|+key:Key\l+op:StringOperator\l}"]
 
-140730825193272 -> 140730825198552[arrowtail=diamond, dir=both, headlabel="cond 0..*"]
-140730825193272[ label="{Conjunction|}"]
+140712151282360[ label="{ModifyAction|+key:Key\l+value:STRING\l}"]
 
-140730824855528[ label="{STRING|}"]
+140712151214872[ label="{Condition|+match:OBJECT\l}"]
 
-140730824943272[ label="{NUMBER|}"]
-140730824943272 -> 140730824941480 [dir=back]
-140730824943272 -> 140730824939688 [dir=back]
+140712150967992[ label="{INT|}"]
 
-140730824945448[ label="{BASETYPE|}"]
-140730824945448 -> 140730824943272 [dir=back]
-140730824945448 -> 140730824937896 [dir=back]
-140730824945448 -> 140730824854600 [dir=back]
-140730824945448 -> 140730824855528 [dir=back]
+140712150973752[ label="{BASETYPE|}"]
+140712150973752 -> 140712150971576 [dir=back]
+140712150973752 -> 140712150966200 [dir=back]
+140712150973752 -> 140712150962392 [dir=back]
+140712150973752 -> 140712150964408 [dir=back]
 
-140730824941480[ label="{FLOAT|}"]
+140712150969784[ label="{FLOAT|}"]
 
-140730824937896[ label="{BOOL|}"]
+140712150971576[ label="{NUMBER|}"]
+140712150971576 -> 140712150969784 [dir=back]
+140712150971576 -> 140712150967992 [dir=back]
 
-140730824939688[ label="{INT|}"]
+140712150964408[ label="{STRING|}"]
 
-140730824854600[ label="{ID|}"]
+140712150962392[ label="{ID|}"]
 
-140730824947240[ label="{*OBJECT|}"]
-140730824947240 -> 140730824945448 [dir=back]
+140712150966200[ label="{BOOL|}"]
+
+140712150975544[ label="{*OBJECT|}"]
+140712150975544 -> 140712150973752 [dir=back]
 
 
 }
