@@ -28,9 +28,10 @@ if :notexists source.abuse_contact || source.abuse_contact =~ '.*@example.com' {
 ### Modification based on event properties
 
 ```
-if classification.type =~ 'phishing|malware' && source.fqdn =~ '.*\.(ch|li)$' {
-  add comment = 'domainabuse';
-  keep
+if classification.type == ['phishing', 'malware'] && source.fqdn =~ '.*\.(ch|li)$' {
+  add comment = 'domainabuse'
+  modify classification.taxonomy = 'fraud'
+  remove extra.comments
 }
 ```
 

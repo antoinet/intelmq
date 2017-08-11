@@ -151,7 +151,7 @@ class SieveExpertBot(Bot):
             event[action.key] = action.value
         elif action.__class__.__name__ == 'ModifyAction':
             if action.key in event:
-                event[action.key] = action.value
+                event.change(action.key, action.value)
         elif action.__class__.__name__ == 'RemoveAction':
             if action.key in event:
                 del event[action.key]
