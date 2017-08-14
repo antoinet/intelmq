@@ -110,12 +110,47 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_numeric_less_than_match(self):
         """ Test < numeric match """
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_numeric_less_than_match.sieve')
+
+        """IF LESS THAN DROP"""
+        numeric_match_true = EXAMPLE_INPUT.copy()
+        numeric_match_true['feed.accuracy'] = 50.0
+        self.input_message = numeric_match_true
+        self.run_bot()
+        self.assertOutputQueueLen(0)
+
+        """IF GREATER THAN KEEP"""
+        numeric_match_false = EXAMPLE_INPUT.copy()
+        numeric_match_false['feed.accuracy'] = 99.5
+        self.input_message = numeric_match_false
+        self.run_bot()
+        self.assertMessageEqual(0, numeric_match_false)
 
     def test_numeric_less_than_or_equal_match(self):
         """ Test <= numeric match """
 
+
+
     def test_numeric_greater_than_match(self):
         """ Test > numeric match """
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_numeric_greater_than_match.sieve')
+
+        """IF GREATER THAN DROP"""
+        numeric_match_true = EXAMPLE_INPUT.copy()
+        numeric_match_true['feed.accuracy'] = 50.0
+        self.input_message = numeric_match_true
+        self.run_bot()
+        self.assertOutputQueueLen(0)
+
+
+        """IF LESS THAN KEEP"""
+        numeric_match_false = EXAMPLE_INPUT.copy()
+        numeric_match_false['feed.accuracy'] = 35.5
+        self.input_message = numeric_match_false
+        self.run_bot()
+        self.assertMessageEqual(0, numeric_match_false)
+
+
 
     def test_numeric_greater_than_or_equal_match(self):
         """ Test >= numeric match """
