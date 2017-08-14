@@ -142,16 +142,17 @@ class SieveExpertBot(Bot):
 
     @staticmethod
     def process_action(action, event):
+        print(type(event))
         if action == 'drop':
             return False
         elif action.__class__.__name__  == 'AddAction':
             if action.key not in event:
-                event[action.key] = action.value
+                event.add(action.key, action.value)
         elif action.__class__.__name__ == 'AddForceAction':
-            event[action.key] = action.value
+            event.add(action.key, action.value, overwirte = True)
         elif action.__class__.__name__ == 'ModifyAction':
             if action.key in event:
-                event[action.key] = action.value
+                event.change(action.key, action.value)
         elif action.__class__.__name__ == 'RemoveAction':
             if action.key in event:
                 del event[action.key]

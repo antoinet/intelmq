@@ -25,6 +25,44 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_or_match(self):
         """ Test Or Operator in match"""
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_or_match.sieve')
+
+        """ Expressions: TRUE || TRUE => TRUE """
+        truetrue = EXAMPLE_INPUT.copy()
+        truetrue['comment'] = "I am TRUE in OR clause"
+        truetrue_result = truetrue.copy()
+        truetrue_result['source.ip'] = "10.9.8.7"
+        self.input_message = truetrue
+        self.run_bot()
+        self.assertMessageEqual(0, truetrue_result)
+
+        """ Expressions: TRUE || FALSE => TRUE """
+        truefalse = EXAMPLE_INPUT.copy()
+        truefalse['comment'] = "I am NOT True in OR clause"
+        truefalse_result = truefalse.copy()
+        truefalse_result['source.ip'] = "10.9.8.7"
+        self.input_message = truefalse
+        self.run_bot()
+        self.assertMessageEqual(0, truefalse_result)
+
+        """ Expressions: FALSE || TRUE => TRUE """
+        falsetrue = EXAMPLE_INPUT.copy()
+        falsetrue['source.abuse_contact'] = "test@test.eu"
+        falsetrue['comment'] = "I am TRUE in OR clause"
+        falsetrue_result = falsetrue.copy()
+        falsetrue_result['source.ip'] = "10.9.8.7"
+        self.input_message = falsetrue
+        self.run_bot()
+        self.assertMessageEqual(0, falsetrue_result)
+
+        """ Expressions: FALSE || FALSE => FALSE """
+        falsefalse = EXAMPLE_INPUT.copy()
+        falsefalse['source.abuse_contact'] = "test@test.eu"
+        falsefalse['comment'] = "I am NOT True in OR clause"
+        falsefalse_result = falsefalse.copy()
+        self.input_message = falsefalse
+        self.run_bot()
+        self.assertMessageEqual(0, falsefalse_result)
 
     def test_and_match(self):
         """ Test And Operator in match"""
