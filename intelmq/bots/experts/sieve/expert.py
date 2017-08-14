@@ -138,7 +138,7 @@ class SieveExpertBot(Bot):
 
     @staticmethod
     def process_numeric_operator(lhs, op, rhs):
-        return eval(lhs + op + rhs)
+        return eval(str(lhs) + op + str(rhs))
 
     @staticmethod
     def process_action(action, event):
