@@ -7,7 +7,7 @@ SieveModel: rules*=Rule ;
 
 Rule:
   'if' expr=Expression '{'
-    actions*=Action[';']
+    actions*=Action
   '}'
 ;
 

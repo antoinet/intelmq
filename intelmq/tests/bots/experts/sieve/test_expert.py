@@ -157,6 +157,22 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
     def test_remove(self):
         """ Test removing keys """
 
+    def test_multiple_actions(self):
+        """ Test applying multiple actions in one rule """
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_multiple_actions.sieve')
+
+        event = EXAMPLE_INPUT.copy()
+        event['classification.type'] = 'unknown'
+        self.input_message = event
+        self.run_bot()
+
+        expected_result = event.copy()
+        expected_result['source.ip'] = '127.0.0.2'
+        expected_result['comment'] = 'added'
+        del expected_result['classification.type']
+
+        self.assertMessageEqual(0, expected_result)
+
 
 
 
