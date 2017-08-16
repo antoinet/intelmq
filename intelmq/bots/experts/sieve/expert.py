@@ -149,7 +149,7 @@ class SieveExpertBot(Bot):
             if action.key not in event:
                 event.add(action.key, action.value)
         elif action.__class__.__name__ == 'AddForceAction':
-            event.add(action.key, action.value, overwirte = True)
+            event.add(action.key, action.value, overwrite=True)
         elif action.__class__.__name__ == 'ModifyAction':
             if action.key in event:
                 event.change(action.key, action.value)
