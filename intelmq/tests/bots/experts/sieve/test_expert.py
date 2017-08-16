@@ -21,13 +21,12 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
     @classmethod
     def set_bot(cls):
         cls.bot_reference = SieveExpertBot
-        #cls.sysconfig = {'file': os.path.join(os.path.dirname(__file__), 'test.sieve')}
 
     def test_or_match(self):
         """ Test Or Operator in match"""
         self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_or_match.sieve')
 
-        """ Expressions: TRUE || TRUE => TRUE """
+        # Expressions: TRUE || TRUE => TRUE
         truetrue = EXAMPLE_INPUT.copy()
         truetrue['comment'] = "I am TRUE in OR clause"
         truetrue_result = truetrue.copy()
@@ -36,7 +35,7 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
         self.run_bot()
         self.assertMessageEqual(0, truetrue_result)
 
-        """ Expressions: TRUE || FALSE => TRUE """
+        # Expressions: TRUE || FALSE => TRUE
         truefalse = EXAMPLE_INPUT.copy()
         truefalse['comment'] = "I am NOT True in OR clause"
         truefalse_result = truefalse.copy()
@@ -45,7 +44,7 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
         self.run_bot()
         self.assertMessageEqual(0, truefalse_result)
 
-        """ Expressions: FALSE || TRUE => TRUE """
+        # Expressions: FALSE || TRUE => TRUE
         falsetrue = EXAMPLE_INPUT.copy()
         falsetrue['source.abuse_contact'] = "test@test.eu"
         falsetrue['comment'] = "I am TRUE in OR clause"
@@ -55,7 +54,7 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
         self.run_bot()
         self.assertMessageEqual(0, falsetrue_result)
 
-        """ Expressions: FALSE || FALSE => FALSE """
+        # Expressions: FALSE || FALSE => FALSE
         falsefalse = EXAMPLE_INPUT.copy()
         falsefalse['source.abuse_contact'] = "test@test.eu"
         falsefalse['comment'] = "I am NOT True in OR clause"
@@ -89,21 +88,19 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
         """ Test == numeric match """
         self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_numeric_equal_match.sieve')
 
-        """IF MATCH DROP"""
+        # if match drop
         numeric_match_true=EXAMPLE_INPUT.copy()
         numeric_match_true['feed.accuracy']=100.0
         self.input_message=numeric_match_true
         self.run_bot()
         self.assertOutputQueueLen(0)
 
-        """IF DOESN'T MATCH KEEP"""
+        # if doesn't match keep
         numeric_match_false=EXAMPLE_INPUT.copy()
         numeric_match_false['feed.accuracy']=50.0
         self.input_message=numeric_match_false
         self.run_bot()
         self.assertMessageEqual(0,numeric_match_false)
-
-
 
     def test_numeric_not_equal_match(self):
         """ Test != numeric match """
@@ -112,14 +109,14 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
         """ Test < numeric match """
         self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_numeric_less_than_match.sieve')
 
-        """IF LESS THAN DROP"""
+        # if less than drop
         numeric_match_true = EXAMPLE_INPUT.copy()
         numeric_match_true['feed.accuracy'] = 50.0
         self.input_message = numeric_match_true
         self.run_bot()
         self.assertOutputQueueLen(0)
 
-        """IF GREATER THAN KEEP"""
+        # if greater than keep
         numeric_match_false = EXAMPLE_INPUT.copy()
         numeric_match_false['feed.accuracy'] = 99.5
         self.input_message = numeric_match_false
@@ -129,28 +126,23 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
     def test_numeric_less_than_or_equal_match(self):
         """ Test <= numeric match """
 
-
-
     def test_numeric_greater_than_match(self):
         """ Test > numeric match """
         self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_numeric_greater_than_match.sieve')
 
-        """IF GREATER THAN DROP"""
+        # if greater than drop
         numeric_match_true = EXAMPLE_INPUT.copy()
         numeric_match_true['feed.accuracy'] = 50.0
         self.input_message = numeric_match_true
         self.run_bot()
         self.assertOutputQueueLen(0)
 
-
-        """IF LESS THAN KEEP"""
+        # if less than keep
         numeric_match_false = EXAMPLE_INPUT.copy()
         numeric_match_false['feed.accuracy'] = 35.5
         self.input_message = numeric_match_false
         self.run_bot()
         self.assertMessageEqual(0, numeric_match_false)
-
-
 
     def test_numeric_greater_than_or_equal_match(self):
         """ Test >= numeric match """
