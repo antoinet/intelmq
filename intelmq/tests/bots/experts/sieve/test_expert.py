@@ -378,11 +378,41 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_exists_match(self):
         """ Test :exists match """
-        # TODO
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_exists_match.sieve')
+
+        # positive test
+        event = EXAMPLE_INPUT.copy()
+        event['source.fqdn'] = 'www.example.com'
+        expected = event.copy()
+        expected['comment'] = 'I think therefore I am.'
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, expected)
+
+        # negative test
+        event = EXAMPLE_INPUT.copy()
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, event)
 
     def test_not_exists_match(self):
         """ Test :notexists match """
-        # TODO
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_notexists_match.sieve')
+
+        # positive test
+        event = EXAMPLE_INPUT.copy()
+        expected = event.copy()
+        expected['comment'] = 'I think therefore I am.'
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, expected)
+
+        # negative test
+        event = EXAMPLE_INPUT.copy()
+        event['source.fqdn'] = 'www.example.com'
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, event)
 
     def test_string_match_value_list(self):
         """ Test string match with StringValueList """
