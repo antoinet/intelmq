@@ -319,7 +319,31 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_add_force(self):
         """ Test adding key/value pairs, overwriting existing key """
-        # TODO
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_add_force.sieve')
+
+        # If doesn't match, nothing should have changed
+        event1 = EXAMPLE_INPUT.copy()
+        self.input_message = event1
+        self.run_bot()
+        self.assertMessageEqual(0, event1)
+
+        # If expression matches, destination.ip field is added as new field
+        event1['comment'] = 'add force new field'
+        result = event1.copy()
+        result['destination.ip'] = '150.50.50.10'
+        self.input_message = event1
+        self.run_bot()
+        self.assertMessageEqual(0, result)
+
+        # If expression matches, destination.ip field is added as new field
+        event2 = EXAMPLE_INPUT.copy()
+        event2['comment'] = 'add force existing fields'
+        result2 = event2.copy()
+        result2['destination.ip'] = '200.10.9.7'
+        result2['source.ip'] = "10.9.8.7"
+        self.input_message = event2
+        self.run_bot()
+        self.assertMessageEqual(0, result2)
 
     def test_modify(self):
         """ Test modifying key/value pairs """
