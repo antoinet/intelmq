@@ -6,7 +6,6 @@ import os
 import intelmq.lib.test as test
 from intelmq.bots.experts.sieve.expert import SieveExpertBot
 
-
 EXAMPLE_INPUT = {"__type": "Event",
                  "source.ip": "127.0.0.1",
                  "source.abuse_contact": "abuse@example.com",
@@ -286,6 +285,22 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_add(self):
         """ Test adding key/value pairs """
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_add.sieve')
+
+        # TODO: finish this test
+        # If doesn't match, nothing should have changed
+        event1 = EXAMPLE_INPUT.copy()
+        self.input_message = event1
+        self.run_bot()
+        self.assertMessageEqual(0, event1)
+
+        # If expression matches, destination.ip field is added
+        event1['comment'] = 'add field'
+        result = event1.copy()
+        result['destination.ip'] = '150.50.50.10'
+        self.input_message = event1
+        self.run_bot()
+        self.assertMessageEqual(0, result)
 
     def test_add_force(self):
         """ Test adding key/value pairs, overwriting existing key """
@@ -311,9 +326,6 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
         del expected_result['classification.type']
 
         self.assertMessageEqual(0, expected_result)
-
-
-
 
 if __name__ == '__main__':  # pragma: no cover
     unittest.main()
