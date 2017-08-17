@@ -378,11 +378,41 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_exists_match(self):
         """ Test :exists match """
-        # TODO
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_exists_match.sieve')
+
+        # positive test
+        event = EXAMPLE_INPUT.copy()
+        event['source.fqdn'] = 'www.example.com'
+        expected = event.copy()
+        expected['comment'] = 'I think therefore I am.'
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, expected)
+
+        # negative test
+        event = EXAMPLE_INPUT.copy()
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, event)
 
     def test_not_exists_match(self):
         """ Test :notexists match """
-        # TODO
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_notexists_match.sieve')
+
+        # positive test
+        event = EXAMPLE_INPUT.copy()
+        expected = event.copy()
+        expected['comment'] = 'I think therefore I am.'
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, expected)
+
+        # negative test
+        event = EXAMPLE_INPUT.copy()
+        event['source.fqdn'] = 'www.example.com'
+        self.input_message = event
+        self.run_bot()
+        self.assertMessageEqual(0, event)
 
     def test_string_match_value_list(self):
         """ Test string match with StringValueList """
@@ -530,7 +560,29 @@ class TestSieveExpertBot(test.BotTestCase, unittest.TestCase):
 
     def test_remove(self):
         """ Test removing keys """
-        # TODO
+        self.sysconfig['file'] = os.path.join(os.path.dirname(__file__), 'test_sieve_files/test_remove.sieve')
+
+        # If doesn't match, nothing should have changed
+        event1 = EXAMPLE_INPUT.copy()
+        self.input_message = event1
+        self.run_bot()
+        self.assertMessageEqual(0, event1)
+
+        # If expression matches && parameter exists, parameter is removed
+        event1['comment'] = 'remove parameter'
+        result = event1.copy()
+        event1['destination.ip'] = '192.168.10.1'
+        self.input_message = event1
+        self.run_bot()
+        self.assertMessageEqual(0, result)
+
+        # If expression matches && parameter doesn't exist, nothing happens
+        event2 = EXAMPLE_INPUT.copy()
+        event2['comment'] = 'remove parameter'
+        result2 = event2.copy()
+        self.input_message = event2
+        self.run_bot()
+        self.assertMessageEqual(0, result2)
 
     def test_multiple_actions(self):
         """ Test applying multiple actions in one rule """
