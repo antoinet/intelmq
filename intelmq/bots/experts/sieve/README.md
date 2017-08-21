@@ -1,6 +1,6 @@
 # Sieve Bot
 
-The sieve bot is used to filter and/or modify bots based on a set of rules. The
+The sieve bot is used to filter and/or modify events based on a set of rules. The
 rules are specified in an external configuration file and with a syntax similar
 to the [Sieve language](http://sieve.info/) used for mail filtering.
 
