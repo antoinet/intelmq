@@ -14,7 +14,8 @@ REQUIRES = [
     'pytz>=2014.1',
     'redis>=2.10.3',
     'requests>=2.2.0',
-    'textX>=1.5.1'
+    'textX>=1.5.1',
+    'ipaddress>=1.0.18'
 ]
 if sys.version_info < (3, 5):
     REQUIRES.append('typing')
