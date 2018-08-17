@@ -36,7 +36,9 @@ class CertEUCSVParserBot(ParserBot):
         "destination port", "source latitude", "source city", "source cc",
         "source longitude", "first_seen", "num_sensors", "confidence level",
         "last_seen", "target", "url", "asn", "domain name"]
+
     ignore_lines_starting = ["#"]
+    csv_params = {'lineterminator': '\n'}
 
     def parse_line(self, line, report):
         event = self.new_event(report)
